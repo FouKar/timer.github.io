@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        body, jumbotron{
+            padding: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="jumbotron text-center" >
+        <div class="timer" style="font-size: 6rem;">
+            <span class="minutes">00</span>:<span class="seconds">00</span>
+        </div>
+        <!-- Timer Buttons-->
+        <div class="timer-buttons">
+                <button class="btn btn-lg btn-success " data-action="start">Start</button>
+                <button class="btn btn-lg btn-danger " data-action="stop">Stop</button>
+                <button class="btn btn-link btn-block " data-action="reset">Reset</button>
+
+        </div>
+     </div>
+
+    <!--🔥🔥🔥🔥 Start Javascript 🔥🔥🔥🔥 -->
+    <script>
+        //Get Elements
+        const startBtn=document.querySelector('[data-action="start"]');
+        const stopBtn=document.querySelector('[data-action="stop"]');
+        const resBtn=document.querySelector('[data-action="reset"]');
+        const mins= document.querySelector('.minutes');
+        const sec= document.querySelector('.seconds');
+        let isRunning=false;
+        let tTime=00;
+        let interval;
+
+        //Define functions
+        function startTimer(){
+            if(isRunning) {
+                return;
+            }
+            isRunning=true;
+            interval=setInterval(incrementTimer,1000)
+
+        }
+
+        function stopTimer(){
+            if (!isRunning) {
+                return;
+            }
+
+            isRunning=false;
+            clearInterval(interval);
+        }
+
+        function resetTimer(){
+            stopTimer();
+            tTime=0;
+            mins.innerText='00';
+            sec.innerText='00';
+        }
+        function pad(number){
+            if(number<10){
+                return '0'+number;
+            }
+            else{
+                return number;
+            }
+        }
+        function incrementTimer(){
+            tTime++;
+                const numMins= Math.floor(tTime/60);
+                const numSecs= tTime%60;
+            
+                mins.innerText=pad(numMins);
+                sec.innerText=pad(numSecs);
+            
+        }
+        
+        
+        //Add event listeners
+        startBtn.addEventListener("click",startTimer);
+        stopBtn.addEventListener("click",stopTimer);
+        resBtn.addEventListener("click",resetTimer);
+
+    </script>
+</body>
+</html>
